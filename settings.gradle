@@ -1,0 +1,3 @@
+rootProject.name = 'comp1721_cwk2'
+include 'core'
+include 'game'

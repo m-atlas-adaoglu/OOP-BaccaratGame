@@ -1,0 +1,49 @@
+// Build script for application
+
+plugins {
+  id 'java'
+  id 'checkstyle'
+  id 'application'
+  id 'idea'
+}
+
+dependencies {
+  implementation project(':core')
+}
+
+checkstyle {
+  showViolations false
+}
+
+application {
+  mainClass = 'comp1721.cwk2.Baccarat'
+  run {
+    description 'Runs this project without any command line arguments.'
+    standardInput = System.in
+  }
+}
+
+idea {
+  module {
+    sourceDirs += file('src/main/java')
+    testSourceDirs += file('src/test/java')
+    inheritOutputDirs = false
+    outputDir = file('build/classes/java/main')
+    testOutputDir file('build/classes/java/test')
+  }
+}
+
+task style {
+  group 'verification'
+  description 'Runs checkstyle on code of this project.'
+  dependsOn checkstyleMain
+}
+
+task interactive(type: JavaExec) {
+  group 'application'
+  description 'Runs this project with "-i" command line argument.'
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'comp1721.cwk2.Baccarat'
+  standardInput = System.in
+  args ('-i')
+}
